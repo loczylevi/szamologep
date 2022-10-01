@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Számológép</title>
+    <link rel="stylesheet" href="stilus.css">
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+</head>
+<body>
+    <strong><p>A mai nap dátuma: <div id='today'></div></p></strong>
+    <div class="container">
+        <form>
+            <fieldset>
+                <legend style="margin-top: 25px">Számológép <i>(Aplha version)</i></legend>
+                <!-- ip cimek bekérése itt kezdődik-->
+                <hr>
+                <legend style="margin-top: 25px">Légyszíves <strong>tegyél space-t</strong> <i>a számok és karakterek közé</i> <strong>ezutén nyomja meg </strong>"Számol" gombot!</legend>
+                <hr>
+                <legend style="margin-top: 25px">PL: (1 + 1)</legend>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-form-label col-form-label-lg mt-4"
+                            for="inputLarge"><strong>Számológép</strong></label>
+                            <input class="form-control form-control-lg" type="text"
+                            placeholder="írjon ide..." id="bekeres" spellcheck="false"
+                            data-ms-editors="true">
+                        </div>
+                    </div>
+
+        
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="alert alert-dismissible alert-danger">
+                            <strong id="msg">Üzenetek itt jelennek meg!  ༼ つ ◕_◕ ༽つ</strong>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="alert alert-dismissible alert-primary">
+                            <strong>Megoldás: </strong>
+                            <a href="#" id="kimenet" class="alert-link"></a>
+                        </div>
+                
+
+
+
+                </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-1">
+                    <button type="button" id="run" class="btn btn-light"
+                    pys-onClick="solve">Számol</button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="reset" class="btn btn-dark"
+                    pys-onClick="solve">Törlés</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+</div>
+</body>
+<py-script>
+import datetime as dt
+pyscript.write('today', dt.date.today().strftime('%A %B %d, %Y'))
+#________________________________________________________________________
+
+
+#változok megadása
+bekeres = Element("bekeres"); message = Element("msg");
+kimenet = Element("kimenet"); 
+
+
+#txtA = Element("txtA"); txtB = Element("txtB"); txtC = Element("txtC"); message = Element("msg")
+#result_x = Element("x"); result_x1 = Element("x1"); result_x2 = Element("x2")
+#result_x.write(x)
+
+def solve(*args, **kwargs): 
+    szamolo = str(bekeres.value)
+
+    a = szamolo.split()
+    try:
+        if a[1] == "//":
+            eredmeny = int(a[0]) // int(a[2])
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+        elif a[1] == "+":
+            eredmeny = int(a[0]) + int(a[2])
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+        elif a[1] == "-":
+            eredmeny = int(a[0]) - int(a[2])
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+        elif a[1] == "*":
+            eredmeny = int(a[0]) * int(a[2])
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+        elif a[1] == "/":
+            eredmeny = int(a[0]) / int(a[2])
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+        elif a[1] == "%":
+            eredmeny = int(a[0]) % int(a[2])
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+        elif a[1] == "**":
+            eredmeny = int(a[0]) ** int(a[2])
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+        elif a[1] == "sqrt":
+            eredmeny = int(a[0]) ** 0.5
+            message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+            kimenet.write(f"{a[1]}({a[0]}) = {eredmeny}")
+            
+        else:
+            message.write("Hibás operátor! ¯\_(ツ)_/¯")
+            kimenet.write("Hiba! ¯\_(ツ)_/¯")
+
+    except ZeroDivisionError:                  # nagyon barokkos ༼ つ ◕_◕ ༽つ
+        message.write("0-val nem lehet osztani!  ╰(°▽°)╯")
+        kimenet.write("Hiba! ¯\_(ツ)_/¯")
+    except OverflowError:
+        message.write("Túlcsordulás! (❁´◡`❁)")
+        kimenet.write("Hiba! ¯\_(ツ)_/¯")
+    except:
+        message.write("Számot kértem nem BETÜT!!!")
+        kimenet.write("Hiba! ¯\_(ツ)_/¯")
+      
+    kimenet.write(f"{a[0]} {a[1]} {a[2]} = {eredmeny}")
+    
+    #message.write("Feldolgozás kész! ( ͡° ͜ʖ ͡°)")
+    
+    
+    #txtA = Element("txtA"); txtB = Element("txtB"); txtC = Element("txtC"); message = Element("msg")
+    #result_x = Element("x"); result_x1 = Element("x1"); result_x2 = Element("x2")
+    #result_x.write(x)
+
+</py-script>
+</html>
